@@ -1,0 +1,121 @@
+.render-chat {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.bd_chat {
+  border: 2px solid white;
+  height: 500px;
+  width: 400px;
+  display: grid;
+  grid-template-rows: 90% 10%;
+}
+
+.form_bt {
+  background-color: red;
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+.input_sent {
+  flex: 50%;
+}
+.bt {
+  height: 100%;
+}
+
+.box-chat {
+  overflow: auto;
+  padding: 5px;
+}
+
+.item-chat {
+  color: white;
+  border: 1px solid white;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.name {
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: underline;
+  margin: 0;
+  margin-left: 10px;
+}
+.textchat {
+  margin: 0;
+  margin-left: 18px;
+  margin-top: 0;
+  margin-bottom: 5px;
+  word-wrap: break-word;
+  padding: 0 5px;
+}
+
+.box-chat::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.box-chat {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* ---------------pyting */
+.chat-bubble {
+  /* background-color: #e6f8f1; */
+  padding: 16px 10px;
+  -webkit-border-radius: 20px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius: 20px;
+  -moz-border-radius-bottomleft: 2px;
+  border-radius: 20px;
+  border-bottom-left-radius: 2px;
+  display: inline-block;
+}
+.typing {
+  align-items: center;
+  display: flex;
+  height: 17px;
+}
+.typing .dot {
+  animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+  background-color: #6cad96;
+  border-radius: 50%;
+  height: 7px;
+  margin-right: 4px;
+  vertical-align: middle;
+  width: 7px;
+  display: inline-block;
+}
+.typing .dot:nth-child(1) {
+  animation-delay: 200ms;
+}
+.typing .dot:nth-child(2) {
+  animation-delay: 300ms;
+}
+.typing .dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+.typing .dot:last-child {
+  margin-right: 0;
+}
+
+@keyframes mercuryTypingAnimation {
+  0% {
+    transform: translateY(0px);
+    background-color: #6cad96;
+  }
+  28% {
+    transform: translateY(-7px);
+    background-color: #9ecab9;
+  }
+  44% {
+    transform: translateY(0px);
+    background-color: #b5d9cb;
+  }
+}
