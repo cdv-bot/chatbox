@@ -4,15 +4,16 @@ import firebase from '../firebase';
 
 export default function useChat(props) {
   const socketRef = useRef();
-  const refMessage = useRef();
   const refScroll = useRef(null);
   const valueSet = useRef();
   const [content, setContent] = useState([]);
   const [chatName, setChatName] = useState();
   const [refLoading, setRefLoading] = useState(false);
+  const [message,setMessage] = useState("");
+  const [showImoji, setShowImoji] = useState(false);
 
   useEffect(() => {
-    socketRef.current = io.connect('https://webchatsokket.herokuapp.com');
+    socketRef.current = io.connect('https://webchatsokket.herokuapp.com/')
     socketRef.current.on('message', ({ name, message }) => {
       setContent([...content, { name, message }]);
       refScroll.current.scrollIntoView();
@@ -21,6 +22,11 @@ export default function useChat(props) {
   }, [chatName, content]);
 
   const onTextChange = e => {
+    const value =  e.target.value;
+    setMessage(value);
+    if(showImoji){
+      setShowImoji(false);
+    }
     const valueNames = localStorage.getItem('hashcode');
     firebase.database().ref(`sentloading/${valueNames}`).set(true);
     if (valueSet.current) {
@@ -32,6 +38,10 @@ export default function useChat(props) {
     //   setValueMessage(value);
   };
 
+  const addEmoji =e =>{
+    let value =  `${message} ${e.native}`
+    setMessage(value)
+  }
   useEffect(() => {
     const valueNames = localStorage.getItem('hashcode');
     var starCountRef = firebase.database().ref('sentloading');
@@ -50,10 +60,12 @@ export default function useChat(props) {
 
   const onMessageSubmit = e => {
     e.preventDefault();
+    if(showImoji){
+      setShowImoji(false);
+    }
     const name = localStorage.getItem('name');
-    const value = refMessage.current.value;
-    socketRef.current.emit('message', { name: name, message: value });
-    refMessage.current.value = '';
+    socketRef.current.emit('message', { name: name, message: message });
+    setMessage("");
   };
 
   return {
@@ -61,9 +73,12 @@ export default function useChat(props) {
     onMessageSubmit,
     setChatName,
     onTextChange,
-    refMessage,
     refLoading,
     setRefLoading,
-    refScroll
+    refScroll,
+    addEmoji,
+    message,
+    showImoji,
+    setShowImoji
   };
 }

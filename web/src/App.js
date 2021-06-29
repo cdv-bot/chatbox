@@ -1,11 +1,13 @@
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane, faSmile } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import md5 from 'md5';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import './App.css';
+import './App.scss';
 import FieldName from './component/FieldName';
 import useChat from './component/useChat';
+import 'emoji-mart/css/emoji-mart.css';
+import { Picker } from 'emoji-mart';
 
 function App() {
   const {
@@ -13,16 +15,19 @@ function App() {
     setChatName,
     onMessageSubmit,
     onTextChange,
-    refMessage,
     refLoading,
-    refScroll
+    refScroll,
+    addEmoji,
+    message,
+    showImoji,
+    setShowImoji
   } = useChat();
-
+ 
   useEffect(() => {
     let hash = localStorage.getItem('hashcode');
     let name = localStorage.getItem('name');
     if (hash !== md5(name + 200)) {
-      console.log("lan")
+      console.log('lan');
       localStorage.clear();
     }
   }, []);
@@ -45,8 +50,8 @@ function App() {
         <div className="box-chat">
           {renderChat()}
           <div ref={refScroll} style={{ color: 'white' }}></div>
-        
-        {refLoading && (
+
+          {refLoading && (
             <>
               <div class="chat-bubble">
                 <div class="typing">
@@ -60,15 +65,25 @@ function App() {
         </div>
         <form onSubmit={onMessageSubmit} className="form_bt">
           <input
+            value={message}
             className="input_sent"
             name="message"
-            ref={refMessage}
             onChange={e => onTextChange(e)}
             autoComplete="off"
           />
-
+          <span className="iconImoji">
+            <FontAwesomeIcon
+              icon={faSmile}
+              onClick={() => setShowImoji(!showImoji)}
+            />
+            {showImoji && (
+              <div className="imoji">
+                <Picker onSelect={addEmoji} />
+              </div>
+            )}
+          </span>
           <button className="bt">
-            <FontAwesomeIcon icon={faPaperPlane} />
+            <FontAwesomeIcon type="submit" icon={faPaperPlane} />
           </button>
         </form>
       </div>

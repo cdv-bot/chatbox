@@ -13,13 +13,20 @@
   height: 500px;
   width: 400px;
   display: grid;
-  grid-template-rows: 90% 10%;
+  grid-template-rows: 1fr auto;
 }
 
 .form_bt {
-  background-color: red;
-  display: grid;
-  grid-template-columns: 80% 20%;
+  display: flex;
+  .input_sent{
+    height:25px;
+    border-radius: 20px;
+    padding-right: 22px;
+    padding-left: 5px;
+    &:focus{
+      outline: none;
+    }
+  }
 }
 .input_sent {
   flex: 50%;
@@ -119,3 +126,16 @@
     background-color: #b5d9cb;
   }
 }
+
+
+.iconImoji{
+  position: relative;
+  .imoji {
+    position: absolute;
+    top: -430px;
+    right: 10px;
+  }
+  left: -20px;
+  top:4px;
+}
+
